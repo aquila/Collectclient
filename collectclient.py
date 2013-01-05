@@ -3,6 +3,13 @@ import zmq
 import json
 import time
 
+class CollectorException(Exception):
+  def __init__(self, expr, msg):
+    self.expr=expr
+    self.msg=msg
+  
+  def __str__(self):
+    return "%s: %s"%(self.expr,self.msg)
   
 class Collector:
   """ Connects to the collector and writes data 
@@ -11,14 +18,9 @@ class Collector:
    c.write("FOO")
    c.writemany(["Foo","bar","baz"])
    """
-  class Exception(Exception):
-    def __init__(self, expr, msg):
-      self.expr=expr
-      self.msg=msg
   def __init__(self,test=None,resource=None,id=None,host="127.0.0.1",port=25500):
-    if not test or resource or id:
-      raise self.Exception("Not properly initialized",
-      """Needs test, resource and id """)
+    if not (test and resource and id):
+      raise CollectorException("Not properly initialized", """Needs test, resource and id """)
       
     self.test=test
     self.resource=resource
@@ -28,7 +30,7 @@ class Collector:
     self.sender.connect("tcp://%s:%s"%(host,port))
 
   def write(self,data):
-    message={"timestamp":int(time.time(),
+    message={"timestamp":int(time.time()),
       self.resource:self.id,
       "test":self.test,
       "data":data}
