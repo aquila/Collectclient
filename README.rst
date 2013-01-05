@@ -7,6 +7,16 @@ This is a python module to ease statistics collection: the module will
 automatically generate the right data out of your (json-serializable) data
 - timestamp it etc.
 
+Dependencies
+------------
+
+* pyzmq==2.2.0
+
+Installation
+------------
+
+``pip install git+https://github.com/FFM/Collectclient``
+
 Usage
 -----
 
