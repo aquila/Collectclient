@@ -23,7 +23,7 @@ Usage
 Usage is simple::
   
   import collectclient
-  c=collectclient.Collect(test="dummy",resource="address",id="127.0.0.1") # assumes collector is running on 127.0.0.1:25500
+  c=collectclient.Collect(test="dummy",resource="address") # assumes collector is running on 127.0.0.1:25500
   c.write("FOO")
 
 
